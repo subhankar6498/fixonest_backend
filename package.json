@@ -4,9 +4,7 @@
   "main": "fixonest.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon fixonest.js",
-    "build": "react-scripts build",
-    "dev": "react-scripts start"
+    "start": "nodemon fixonest.js"
   },
   "keywords": [],
   "author": "",
