@@ -1,0 +1,106 @@
+<div
+  style="height: 100vh"
+  class="container d-flex justify-content-center align-items-center"
+>
+  <div class="col-md-12 shadow-lg p-3 bg-body rounded">
+    <!-- Display success message if available -->
+    <% if (successMessage && successMessage.length > 0) { %>
+    <div class="alert alert-success mt-3" role="alert">
+      <%= successMessage %>
+    </div>
+    <% } %>
+
+    <!-- Display error message if available -->
+    <% if (errorMessage && errorMessage.length > 0) { %>
+    <div class="alert alert-danger mt-3" role="alert"><%= errorMessage %></div>
+    <% } %>
+
+    <h2 class="text-center mb-4">Edit Testimonial Data</h2>
+    <div class="card-body p-1">
+      <form
+        action="<%= '/admin' + generateUrl('testimonials-update',{id:data.singledata._id}) %>"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div class="row">
+          <!-- Column 1: Personal Information -->
+          <div class="col-md-12">
+            <div class="card h-100">
+              <div class="card-body">
+                <!-- Personal Information Fields -->
+                <div class="mb-3">
+                  <label for="clientName" class="form-label">Client Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="clientName"
+                    name="clientName"
+                    value="<%= data.singledata.clientName %>"
+                    placeholder="Enter client name"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="testimonialImage" class="form-label">Image</label>
+                  <input
+                    type="file"
+                    class="form-control"
+                    id="testimonialImage"
+                    name="testimonialImage"
+                    accept="image/*"
+                    onchange="previewImage(event)"
+                  />
+                  <div class="mt-2">
+                    <img
+                      id="imagePreview"
+                      src=""
+                      alt="Image Preview"
+                      class="img-fluid rounded"
+                      style="
+                        display: none;
+                        max-width: 150px;
+                        max-height: 150px;
+                        border: 1px solid #ddd;
+                      "
+                    />
+                  </div>
+                  <% if (data.singledata.testimonialImage) { %>
+                  <div class="mt-2">
+                    <img
+                      src="<%= data.singledata.testimonialImage %>"
+                      alt="Current Profile"
+                      class="img-thumbnail"
+                      style="max-width: 100px; max-height: 100px"
+                    />
+                  </div>
+                  <% } %>
+                </div>
+
+                <div class="mb-3">
+                  <label for="talk" class="form-label">Talk</label>
+                  <textarea
+                    type="text"
+                    rows="4"
+                    class="form-control"
+                    id="talk"
+                    name="talk"
+                  >
+<%= data.singledata.talk %></textarea
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid gap-2 mt-4">
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-md">
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

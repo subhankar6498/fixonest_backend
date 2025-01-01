@@ -1,0 +1,126 @@
+<!-- DashBoard Table -->
+<div class="container">
+  <h3 class="text-center py-4">Testimonials Table</h3>
+  <div class="row">
+    <div class="col-lg">
+      <div class="card">
+        <div class="card-header border-transparent">
+          <div class="clearfix">
+            <div>
+              <a
+                href="<%='/admin' + generateUrl('add-testimonial')%>"
+                class="btn btn-sm btn-info float-left mx-1 my-1"
+                >Add Testimonial</a
+              >
+            </div>
+            <div class="float-right p-0">
+              <input
+                type="text"
+                id="searchInput"
+                class="form-control"
+                placeholder="Search testimonials..."
+              />
+            </div>
+          </div>
+        </div>
+        <!-- /.card-header -->
+
+        <div class="card-body p-0">
+          <div
+            class="table-responsive"
+            style="max-height: 600px; overflow-y: auto"
+          >
+            <% if (data.allTestimonialsdata.length === 0) { %>
+            <h2 class="text-center">No records found</h2>
+            <% } else { %>
+
+            <table class="table m-0">
+              <thead class="table-light sticky-top">
+                <tr>
+                  <th>Sl.No</th>
+                  <th>Name</th>
+                  <th>Talk</th>
+                  <th>Image</th>
+                  <th colspan="2">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="serviceTableBody">
+                <% const latestTestimonials =
+                [...data.allTestimonialsdata].sort((a, b) => new
+                Date(b.createdAt) - new Date(a.createdAt) );
+                latestTestimonials.forEach((tdata, i) => { %>
+                <tr>
+                  <td style="width: 50px"><%= i + 1 %></td>
+                  <td style="width: 150px"><%= tdata.clientName %></td>
+                  <td style="width: 500px"><%= tdata.talk %></td>
+                  <td>
+                    <img
+                      src="<%= tdata.testimonialImage %>"
+                      alt="testimonialImg"
+                      style="
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                        border: 2px solid #f0f0f0;
+                        transition: transform 0.3s, box-shadow 0.3s;
+                      "
+                      onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 6px 8px rgba(0, 0, 0, 0.2)';"
+                      onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.1)';"
+                    />
+                  </td>
+                  
+                  <td>
+                    <a href="/admin/testimonials-edit/<%= tdata._id %>">
+                      <button class="btn btn-primary">Edit</button>
+                    </a>
+                  </td>
+                  <td>
+                    <a href="/admin/testimonials-remove/<%= tdata._id %>">
+                      <button class="btn btn-danger">Delete</button>
+                    </a>
+                  </td>
+                </tr>
+                <% }); %>
+              </tbody>
+            </table>
+            <% } %>
+          </div>
+        </div>
+
+        <!-- /.card-footer -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REQUIRED SCRIPT for search functionality -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searchInput");
+    const userTableBody = document.getElementById("serviceTableBody");
+
+    searchInput.addEventListener("keyup", function () {
+      const searchTerm = this.value.toLowerCase();
+      const rows = userTableBody.getElementsByTagName("tr");
+
+      for (let row of rows) {
+        const name = row.cells[0].textContent.toLowerCase();
+        const email = row.cells[1].textContent.toLowerCase();
+        const role = row.cells[2].textContent.toLowerCase();
+        const status = row.cells[3].textContent.toLowerCase();
+
+        if (
+          name.includes(searchTerm) ||
+          email.includes(searchTerm) ||
+          role.includes(searchTerm) ||
+          status.includes(searchTerm)
+        ) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      }
+    });
+  });
+</script>

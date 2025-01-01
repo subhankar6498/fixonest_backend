@@ -1,0 +1,243 @@
+<div
+  style="height: 90vh"
+  class="container d-flex justify-content-center align-items-center"
+>
+  <div class="row justify-content-center">
+    <div class="col-md-10 shadow-lg p-3 bg-body rounded">
+      <!-- Display success message if available -->
+      <% if (successMessage && successMessage.length > 0) { %>
+      <div class="alert alert-success mt-3" role="alert">
+        <%= successMessage %>
+      </div>
+      <% } %>
+
+      <!-- Display error message if available -->
+      <% if (errorMessage && errorMessage.length > 0) { %>
+      <div class="alert alert-danger mt-3" role="alert">
+        <%= errorMessage %>
+      </div>
+      <% } %>
+
+      <h2 class="text-center mb-4">Edit Technician</h2>
+      <div class="card-body p-1">
+        <form
+        action="<%= '/admin' + generateUrl('technician.update',{technicinaId:data.result._id}) %>"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div class="row">
+            <!-- Column 1: Personal Information -->
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-header bg-light">
+                  <h5 class="mb-0">Personal Information</h5>
+                </div>
+                <div class="card-body">
+                  <!-- Personal Information Fields -->
+                  <div class="mb-3">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="firstName"
+                      name="firstName"
+                      value="<%=data.result.firstName%>"
+                      placeholder="Enter first name"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="lastName"
+                      name="lastName"
+                      value="<%=data.result.lastName%>"
+                      placeholder="Enter last name"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <div class="input-group">
+                      <span class="input-group-text"
+                        ><i class="bi bi-envelope"></i
+                      ></span>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        value="<%=data.result.email%>"
+                        placeholder="Enter email address"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="mobileNo" class="form-label"
+                      >Mobile Number</label
+                    >
+                    <div class="input-group">
+                      <span class="input-group-text"
+                        ><i class="bi bi-phone"></i
+                      ></span>
+                      <input
+                        type="tel"
+                        class="form-control"
+                        id="mobileNo"
+                        name="mobileNo"
+                        value="<%=data.result.mobileNo%>"
+                        placeholder="Enter mobile number"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 2: Address Information -->
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-header bg-light">
+                  <h5 class="mb-0">Address</h5>
+                </div>
+                <div class="card-body">
+                  <!-- Address Fields -->
+                  <div class="mb-3">
+                    <label for="country" class="form-label">Country</label>
+                    <select class="form-select" id="country" name="country">
+                      <option
+                        value="India"
+                        selected
+                      >
+                        India
+                      </option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="state" class="form-label">State</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="state"
+                      name="state"
+                      value="<%=data.result.address.state%>"
+                      placeholder="Enter state"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="city" class="form-label">City</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="city"
+                      name="city"
+                      value="<%=data.result.address.city%>"
+                      placeholder="Enter city"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="pincode" class="form-label">Pincode</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="pincode"
+                      name="pincode"
+                      value="<%=data.result.address.pincode%>"
+                      placeholder="Enter pincode"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 3: Others Information -->
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-header bg-light">
+                  <h5 class="mb-0">Others Information</h5>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label for="role" class="form-label">Role</label>
+                    <select class="form-select" id="role" name="role">
+                      <option value="technician" <%= data.result.role === 'technician' ? "selected" : '' %>>Technician</option>
+                    </select>
+                  </div>
+
+                  <div class="mb-3 technician-field">
+                    <label for="specialization" class="form-label">Specialization</label>
+                    <select class="form-select" id="specialization" name="specialization">
+                      <option value="" disabled>Select Specialization</option>
+                      <% data.getServiceCategoryList.forEach((category) => { %>
+                        <option 
+                          value="<%= category.id %>" 
+                          <%= String(data.result.specialization) === String(category.id) ? "selected" : "" %>>
+                          <%= category.categoryName %>
+                        </option>
+                      <% }); %>
+                    </select>
+                    <small class="form-text text-muted">
+                      Please confirm or update the technician's specialization before saving.
+                    </small>
+                  </div>
+                  
+                  
+                  
+                  
+
+
+                  <div class="mb-3 technician-field">
+                    <label for="experience" class="form-label"
+                      >Experience (Years)</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="experience"
+                      name="experience"
+                      value="<%=data.result.experience%>"
+                      placeholder="Enter experience"
+                      min="0"
+                    />
+                  </div>
+
+                  <!-- Account Fields -->
+                  <div class="mb-3">
+                    <label for="profileImage" class="form-label"
+                      >Profile Image</label
+                    >
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="profileImage"
+                      name="profileImage"
+                      accept="image/*"
+
+                    />
+                    <div class="form-text">
+                      Supported: JPG, PNG, JPEG (Max: 2MB)
+                    </div>
+                    <% if (data.result.profileImage) { %>
+                        <div class="mt-2">
+                          <img src="<%= data.result.profileImage %>" alt="Current Profile" class="img-thumbnail" style="max-width: 100px; max-height: 100px">
+                        </div>
+                        <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="d-grid gap-2 mt-4">
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary btn-md">
+                Update
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

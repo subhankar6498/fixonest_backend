@@ -1,0 +1,121 @@
+<!-- DashBoard Table -->
+<div class="container-fluid">
+  <h3 class="text-center py-4">Booking Table</h3>
+  <div class="row">
+    <div class="col-lg">
+      <div class="card">
+        <div class="card-header border-transparent">
+          <!-- Add this inside the card-header div, next to the search input -->
+          <div class="clearfix">
+            <div class="float-right p-0 d-flex">
+              <input
+                type="text"
+                id="searchInput"
+                class="form-control"
+                placeholder="Search bookings..."
+              />
+              <a
+                href="<%= '/admin' + generateUrl('export-booking-list')%>"
+                class="btn btn-secondary btn-sm mx-2"
+                >Export to PDF</a
+              >
+            </div>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body p-0">
+          <div
+            class="table-responsive"
+            style="max-height: 600px; overflow-y: auto"
+          >
+            <% if (data.bookingList.length === 0) { %>
+            <h2 class="text-center">No records found</h2>
+            <% } else { %>
+
+            <table class="table m-0">
+              <thead class="table-light sticky-top">
+                <tr>
+                  <th>Order No.</th>
+                  <th>Customer Name</th>
+                  <th>Service Category</th>
+                  <th>Bookings</th>
+                  <th>Status</th>
+                  <th>Assign Technician</th>
+                </tr>
+              </thead>
+              <tbody id="serviceTableBody">
+                <% const lBList = [...data.bookingList].sort((a, b) => new
+                Date(b.createdAt) - new Date(a.createdAt) ); %> <%
+                lBList.forEach((booking, i) => { %>
+                <tr>
+                  <td><%= String(booking._id).slice(-5) %></td>
+                  <td><%= booking.customer.name %></td>
+                  <td><%= booking.serviceCategory.name %></td>
+                  <td><%= booking.subCategory.name %></td>
+                  <td>
+                    <% if (booking.status === 'pending') { %>
+                    <button class="btn btn-warning btn-sm">Pending</button>
+                    <% } %> <% if (booking.status === 'assigned') { %>
+                    <button class="btn btn-primary btn-sm">Assigned</button>
+                    <% } %> <% if (booking.status === 'completed') { %>
+                    <button class="btn btn-success btn-sm">Completed</button>
+                    <% } %> <% if (booking.status === 'in-progress') { %>
+                    <button class="btn btn-info btn-sm">In-progress</button>
+                    <% } %> <% if (booking.status === 'rejected') { %>
+                    <button class="btn btn-danger btn-sm">Rejected</button>
+                    <% } %> <% if (booking.status === 'cancelled') { %>
+                    <button class="btn btn-danger btn-sm">Cancelled</button>
+                    <% } %>
+                  </td>
+                  <td>
+                    <a
+                      href="<%= '/admin' + generateUrl('booking-view-page',{id:booking._id})%>"
+                      style="text-decoration: underline"
+                    >
+                      Task Assign
+                    </a>
+                  </td>
+                </tr>
+                <% }); %>
+              </tbody>
+            </table>
+            <% } %>
+          </div>
+        </div>
+
+        <!-- /.card-footer -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REQUIRED SCRIPT for search functionality -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searchInput");
+    const userTableBody = document.getElementById("serviceTableBody");
+
+    searchInput.addEventListener("keyup", function () {
+      const searchTerm = this.value.toLowerCase();
+      const rows = userTableBody.getElementsByTagName("tr");
+
+      for (let row of rows) {
+        const name = row.cells[0].textContent.toLowerCase();
+        const email = row.cells[1].textContent.toLowerCase();
+        const role = row.cells[2].textContent.toLowerCase();
+        const status = row.cells[3].textContent.toLowerCase();
+
+        if (
+          name.includes(searchTerm) ||
+          email.includes(searchTerm) ||
+          role.includes(searchTerm) ||
+          status.includes(searchTerm)
+        ) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      }
+    });
+  });
+</script>

@@ -1,0 +1,240 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="<%=path.home %>" class="brand-link text-decoration-none">
+    <img
+      src="/admin/dist/img/AdminLTELogo.png"
+      alt="AdminLTE Logo"
+      class="brand-image img-circle elevation-3"
+      style="opacity: 0.8"
+    />
+    <span class="brand-text font-weight-light">Fixonest</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div
+      class="user-panel mt-3 pb-3 mb-3 d-flex flex-column align-items-center"
+    >
+      <div class="image mb-2">
+        <img
+          src="<%=content.profileImageUrl %>"
+          class="img-fluid img-circle elevation-2"
+          style="height: 100px; width: 80px; object-fit: cover"
+          alt="User Image"
+        />
+      </div>
+      <div class="info text-center">
+        <a href="<%=path.home %>" class="d-block text-decoration-none"
+          ><%=content.firstName%> - <%=content.role%>
+        </a>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <!-- Technician Section (Visible only for admins) -->
+    <% if (content.role === 'admin') { %>
+    <nav class="mt-2">
+      <ul
+        class="nav nav-pills nav-sidebar flex-column"
+        data-widget="treeview"
+        role="menu"
+        data-accordion="false"
+      >
+        <!-- Technician Section -->
+        <li class="nav-item">
+          <a
+            href="<%='/admin' + generateUrl('technician-table-page')%>"
+            class="nav-link"
+          >
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
+              Technician Section
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a
+                href="<%='/admin' + generateUrl('technician-table-page')%>"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Technician Table</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Service Section -->
+        <li class="nav-item">
+          <a
+            href="<%='/admin' + generateUrl('service-table-page')%>"
+            class="nav-link"
+          >
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
+              Service Section
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a
+                href="<%='/admin' + generateUrl('service-table-page')%>"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Service Table</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Booking Section -->
+        <li class="nav-item">
+          <a
+            href="<%='/admin' + generateUrl('booking-table-page')%>"
+            class="nav-link"
+          >
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
+              Booking Section
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a
+                href="<%='/admin' + generateUrl('booking-table-page')%>"
+                class="nav-link"
+              >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Booking Table</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Contact Section -->
+        <li class="nav-item">
+          <a
+            href="<%='/admin' + generateUrl('all-contacts')%>"
+            class="nav-link"
+          >
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
+              Contact Section
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="<%='/admin' + generateUrl('all-contacts')%>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Contact List</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Testimonials Section -->
+        <li class="nav-item">
+          <a
+            href="<%='/admin' + generateUrl('all-testimonials')%>"
+            class="nav-link"
+          >
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
+              Testimonials Section
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="<%='/admin' + generateUrl('all-testimonials')%>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Testimonials List</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <% } %>
+
+    <!-- Technician Sidebar - visible only for technician -->
+    <% if (content.role === 'technician') { %>
+    <nav class="mt-2">
+      <ul class="nav flex-column">
+        <!-- Bookings Section -->
+        <li class="nav-item">
+          <a
+            href="#"
+            class="nav-link d-flex justify-content-between align-items-center"
+            data-bs-toggle="collapse"
+            data-bs-target="#bookingsMenu"
+            aria-expanded="false"
+            aria-controls="bookingsMenu"
+          >
+            <span>
+              <i class="fas fa-calendar-check me-2"></i>
+              My Bookings
+            </span>
+            <i class="fas fa-angle-down"></i>
+          </a>
+          <!-- Collapsible menu -->
+          <ul class="collapse nav flex-column ms-3" id="bookingsMenu">
+            <li class="nav-item">
+              <a
+                href="#newAssignments"
+                class="nav-link d-flex justify-content-between align-items-center"
+                data-bs-toggle="tab"
+              >
+                <span>
+                  <i class="far fa-circle text-info me-2"></i>
+                  New Assignments
+                </span>
+                <span class="badge bg-info"><%= content.counts.new %></span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                href="#completed"
+                class="nav-link d-flex justify-content-between align-items-center"
+                data-bs-toggle="tab"
+              >
+                <span>
+                  <i class="far fa-circle text-success me-2"></i>
+                  Completed
+                </span>
+                <span class="badge bg-success"
+                  ><%= content.counts.completed %></span
+                >
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                href="#rejected"
+                class="nav-link d-flex justify-content-between align-items-center"
+                data-bs-toggle="tab"
+              >
+                <span>
+                  <i class="far fa-circle text-danger me-2"></i>
+                  Rejected
+                </span>
+                <span class="badge bg-danger"
+                  ><%= content.counts.rejected %></span
+                >
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <% } %>
+
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>

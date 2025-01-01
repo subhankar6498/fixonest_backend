@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Head Section -->
+
+  <%- include('../partials/head') %>
+
+  <body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <%- include("../partials/navbar") %>
+
+      <!-- Sidebar -->
+      <%- include("../partials/sidebar") %>
+
+      <!-- Content Wrapper -->
+      <div class="content-wrapper">
+        <section class="content">
+          <!-- Dynamic page-specific content -->
+          <%- body %>
+        </section>
+      </div>
+      <!-- /.content-wrapper -->
+
+      <!-- Footer -->
+      <%- include("../partials/footer") %>
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- Script -->
+    <%- include("../partials/script") %>
+  </body>
+</html>
